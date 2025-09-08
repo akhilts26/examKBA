@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>book lending</title>
+    
+</head>
+<body>
+    <div>
+        <p>Book Titile : </p>
+        <input type="text" id="bookTitle">
+    </div>
+    <div>
+        <p>Author Name : </p>
+        <input type="text" id="authorName">
+    </div>
+    <div>
+        <button onclick="Addbook()">Add</button>
+    </div>
+    <div>
+        <ul id="listInfo"></ul>
+    </div>
+
+    <div>
+        <p>View issue book :</p>
+        <button onclick="viewBook()">View</button>
+    </div>
+    
+    <div>
+        <div><p class="display"></p></div>
+        <ul id="issueList"></ul>
+    </div>
+    
+
+    <script>
+        let issueBook = []
+        let userName = []
+        function Addbook(){
+            const bookTitle = document.getElementById("bookTitle")
+            const authorName = document.getElementById("authorName")
+            const title = bookTitle.value.trim()
+            const author = authorName.value.trim()
+
+            if(title!= '' && author!=''){
+
+                const listInfo = document.getElementById("listInfo")
+                const li = document.createElement("li")
+                li.textContent =`Book : ${title} ||  Author : ${author}`
+                listInfo.appendChild(li)
+                
+                const issueList = document.getElementById("issueList")
+                const issueButton = document.createElement("button")
+                issueButton.innerHTML = "Issue"
+
+                issueButton.onclick = function(){
+                    // alert(`book "${title}"  is issued `)
+                    let user = prompt(`Enter User Name : `)
+                    if(user!=''){
+                        userName.push(user)
+                    
+                        issueBook.push(title)
+                        console.log(issueBook);
+                    }
+                    else{
+                        alert('enter valid name')
+                    }
+                    
+                }
+                li.appendChild(issueButton)
+
+                const returnButton = document.createElement("button")
+                returnButton.innerHTML = "Return"
+
+                returnButton.onclick = function(){
+                    alert(`book "${title}"  is retunerd `)
+                    
+                    let index = issueBook.indexOf(title)
+                    userName.splice("index",1)
+                    issueBook.splice("Index",1)
+                    console.log(issueBook);
+                    
+                }
+                li.appendChild(returnButton)
+
+                const deleteButton = document.createElement("button")
+                deleteButton.innerHTML = "Remove"
+
+                deleteButton.onclick = function(){
+                    listInfo.removeChild(li)
+                    console.log(issueBook);
+
+                    let index = issueBook.indexOf(title)
+                    userName.splice("index",1)
+                    issueBook.splice("Index",1)
+                    console.log(issueBook);
+                    
+                    
+                }
+                li.appendChild(deleteButton)
+                
+
+
+                bookTitle.value = ''
+                authorName.value = ''
+            }else{
+                alert(`Invalid input`)
+            }
+
+        }
+        
+        function viewBook(){
+
+            
+
+
+            const issueList = document.getElementById("issueList")
+            
+            
+            issueBook.forEach((value,key)=>{
+              
+                const li =document.createElement("li")
+                li.textContent = `Book Name : ${value} || User Name : ${userName[key]}` 
+                issueList.appendChild(li)
+                
+            })
+
+
+
+            
+        }
+        
+    </script>
+</body>
+</html>
